@@ -8,7 +8,7 @@ public abstract class Example {
 		System.out.println("run " + getExampleName() + ".demo() time: " + (endTime - startTime));
 	}
 	
-	public abstract void demo();
+	protected abstract void demo();
 	
 	public String getExampleName() {
 		return this.getClass().getSimpleName();

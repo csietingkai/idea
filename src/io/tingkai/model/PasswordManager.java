@@ -3,7 +3,7 @@ package io.tingkai.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PasswordChecker {
+public class PasswordManager {
 
 	public boolean checkRepeat(String passwordStr, int repeatCount) {
 		boolean isValid = true;
@@ -46,5 +46,10 @@ public class PasswordChecker {
 		}
 		
 		return isValid;
+	}
+	
+	public String generate(int length, boolean containReapeat) {
+		// TODO
+		return "";
 	}
 }

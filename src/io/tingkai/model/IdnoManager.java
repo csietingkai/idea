@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-public class IdnoStringHandler {
+public class IdnoManager {
 	
 	@SuppressWarnings("serial")
 	private static final Map<Character, String> COUNTY_NAME = new HashMap<Character, String>() {{

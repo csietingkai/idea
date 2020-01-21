@@ -5,34 +5,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.ThreadLocalRandom;
 
 import io.tingkai.enumerations.FormatType;
 
 public class DateTimeManager {
 	
 	private static final ZoneId ZONE = ZoneId.of("Asia/Taipei");
-	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("uuuu/MM/dd").withZone(ZONE);
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd").withZone(ZONE);
 	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss").withZone(ZONE);
-	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss").withZone(ZONE);
+	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").withZone(ZONE);
 	
-	private static final int YEAR_MIN = 1900;
-	private static final int YEAR_MAX = 9999;
-	private static final int MONTH_MIN = 1;
-	private static final int MONTH_MAX = 12;
-	private static final int DAY_MIN = 1;
-	private static final int DAY_MAX = 366;
-	private static final int HOUR_MIN = 0;
-	private static final int HOUR_MAX = 23;
-	private static final int MINUTE_MIN = 0;
-	private static final int MINUTE_MAX = 59;
-	private static final int SECOND_MIN = 0;
-	private static final int SECOND_MAX = 59;
-	private static final int MILLI_SECOND_MIN = 0;
-	private static final int MILLI_SECOND_MAX = 999;
+//	private static final int YEAR_MIN = 1900;
+//	private static final int YEAR_MAX = 9999;
 	
-	private static final LocalDate START_DATE = LocalDate.of(YEAR_MIN, 1, 1);
-	private static final LocalDate END_DATE = LocalDate.of(YEAR_MAX, 12, 31);
+//	private static final LocalDate START_DATE = LocalDate.of(YEAR_MIN, 1, 1);
+//	private static final LocalDate END_DATE = LocalDate.of(YEAR_MAX, 12, 31);
 	
 	public long getCurrentDate() {
 		return LocalDate.now().atStartOfDay(ZONE).toInstant().toEpochMilli();
@@ -74,26 +61,50 @@ public class DateTimeManager {
 	}
 	
 	public long generate(FormatType type) {
-		long randomEpochDay = ThreadLocalRandom.current().nextLong(START_DATE.toEpochDay(), END_DATE.toEpochDay());
-	    System.out.println(randomEpochDay);
+//		long randomEpochDay = ThreadLocalRandom.current().nextLong(START_DATE.toEpochDay(), END_DATE.toEpochDay());
+//	    System.out.println(randomEpochDay);
 		switch (type) {
 			case DATE:
-//				return Instant.from(LocalDateTime.now(ZONE).toLocalDate()).toEpochMilli();
 			case TIME:
-//				return Instant.from(LocalDateTime.now(ZONE).toLocalTime()).toEpochMilli();
 			case DATE_TIME:
 			default:
-//				return Instant.from(LocalDateTime.now().atZone(ZONE)).toEpochMilli();
 				return 0;
 		}
 	}
 	
 	public String convert(long timeStamp) {
-		return null;
+		return convert(timeStamp, FormatType.DATE_TIME);
+	}
+	
+	public String convert(long timeStamp, FormatType type) {
+		switch (type) {
+			case DATE:
+				return DATE_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
+			case TIME:
+				return TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
+			case DATE_TIME:
+			default:
+				return DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(timeStamp));
+		}
 	}
 	
 	public long convert(String str) {
-		return 0;
+		return convert(str, FormatType.DATE_TIME);
+	}
+	
+	public long convert(String str, FormatType type) {
+		LocalDateTime dateTime = null;
+		switch (type) {
+			case DATE:
+			case TIME:
+				System.out.println("not avaliable");
+				return -1;
+			case DATE_TIME:
+			default:
+				dateTime = LocalDateTime.parse(str, DATE_TIME_FORMATTER);
+		}
+		Instant ts = dateTime.atZone(ZONE).toInstant();
+		return ts.toEpochMilli();
 	}
 	
 	public static boolean isLeap(int year) {

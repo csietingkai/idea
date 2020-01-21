@@ -8,8 +8,9 @@ import java.util.stream.Collectors;
 import io.tingkai.entity.Item;
 
 public class StreamMapExample extends Example {
+	
 	@Override
-	public void demo() {
+	protected void demo() {
 		List<Item<String, String>> list = new ArrayList<Item<String, String>>();
 		list.add(new Item<String, String>("A", "B"));
 		list.add(new Item<String, String>("A", "C"));
