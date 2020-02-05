@@ -108,16 +108,6 @@ public class DateTimeManager {
 	}
 	
 	public static boolean isLeap(int year) {
-		boolean isLeap = false;
-		if (year % 4 == 0) {
-			isLeap = true;
-			if (year % 100 == 0) {
-				isLeap = false;
-				if (year % 400 == 0) {
-					isLeap = true;
-				}
-			}
-		}
-		return isLeap;
+		return year % 400 == 0 ? true : (year % 100 == 0 ? false : (year % 4 == 0 ? true : false));
 	}
 }
